@@ -1,0 +1,30 @@
+stateless/
+	stateless-auth-api/
+		stateless-auth-db (auth-db) 5433:5432
+		docker container run --name stateless-auth-db -p 5433:5432 -e POSTGRES_DB=auth-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:latest 
+		
+	stateless-any-api/
+
+stateful/
+	stateful-auth-api/
+		stateful-auth-db (auth-db) 5434:5432
+		docker container run --name stateful-auth-db -p 5434:5432 -e POSTGRES_DB=auth-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:latest
+		
+		token-redis redis:latest 6379
+		docker container run --name token-redis -p 6379 -d redis:latest
+		conexão com redis:
+			docker exec -it <Nome do Container> redis-cli
+				comandos dentro do cli
+				keys * - Lista todas as chaves
+				set <nome da chave> <valor da chave> - Cria uma nova chave e valor
+				get <nome da chave> - retorna o valor da chave
+				del <nome da chave> - remove a chave
+		
+	stateful-any-api/
+	
+Rodar o arquivo docker compose:
+	cd /mnt/c/Desenvolvimento/ws-vinicius/Udemy-Java-microsservicos - acessar a pasta
+	
+	docker-compose up --build -d 
+	
+	(-d tira os logs)
