@@ -2,7 +2,7 @@
 FROM maven:3.8.4-openjdk-17-slim as build
 WORKDIR /app
 COPY . .
-EXPOSE 8080
+EXPOSE 8083
 RUN mvn package -DskipTests
 
 # Estágio 2: Imagem final
