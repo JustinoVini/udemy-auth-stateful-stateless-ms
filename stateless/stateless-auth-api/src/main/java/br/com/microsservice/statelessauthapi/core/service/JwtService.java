@@ -28,7 +28,7 @@ public class JwtService {
     @Value("${app.token.secret-key}")
     private String secretKey;
 
-    private String createToken(User user) {
+    public String createToken(User user) {
         /*Primeira coisa, hashmap vazio pra inserir os dados*/
         var data = new HashMap<String, String>();
         data.put("id", user.getId().toString());
@@ -39,7 +39,7 @@ public class JwtService {
                 .builder()
                 .setClaims(data) // pega os dados do usuário e encripta
                 .setExpiration(generateExpiresAt()) // seta a expiração do token
-                .signWith() // assina o token
+                .signWith(generateSign()) // assina o token
                 .compact(); // caompacta em String
     }
 
