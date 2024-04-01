@@ -19,4 +19,8 @@ spring:
       format-sql: true
     show-sql: true
     properties:
-      dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+redis:
+  host: ${REDIS_HOST:localhost}
+  port: ${REDIS_PORT:6379}
