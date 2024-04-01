@@ -7,7 +7,7 @@ threads = []
 def build_application(app):
     threads.append(app)
     print("Building application {}".format(app))
-    os.system("cd {} && mvn clean package".format(app))
+    os.system("cd {} && gradle build".format(app))
     print("Application {} finished building!".format(app))
     threads.remove(app)
 
@@ -21,13 +21,13 @@ def docker_compose_up():
 def build_all_applications():
     print("Starting to build applications!")
     threading.Thread(target=build_application,
-                     args=("stateless/stateless-auth-api",)).start()
+                     args={"stateless/stateless-auth-api"}).start()
     threading.Thread(target=build_application,
-                     args=("stateless/stateless-any-api",)).start()
+                     args={"stateless/stateless-any-api"}).start()
     threading.Thread(target=build_application,
-                     args=("stateful/stateful-auth-api",)).start()
+                     args={"stateful/stateful-auth-api"}).start()
     threading.Thread(target=build_application,
-                     args=("stateful/stateful-any-api",)).start()
+                     args={"stateful/stateful-any-api"}).start()
 
 
 def remove_remaining_containers():
@@ -36,7 +36,7 @@ def remove_remaining_containers():
     containers = os.popen('docker ps -aq').read().split('\n')
     containers.remove('')
     if len(containers) > 0:
-        print("There are still {} containers created".format(len(containers)))
+        print("There are still {} containers created".format(containers))
         for container in containers:
             print("Stopping container {}".format(container))
             os.system("docker container stop {}".format(container))
